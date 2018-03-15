@@ -1,3 +1,4 @@
+const delay = require('delay');
 const twilio = require('twilio');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -18,15 +19,77 @@ const app = express();
 
 
 function calls(request, response) {
-  client.calls.create({
-    to: request.body.to,
-    from: callerId,
-    url: 'https://handler.twilio.com/twiml/EHadc8220e4f19192800dcc7e4d0e5bc93'
-  }).then(() => {
-    response.sendStatus(200);
-  }).catch((err) => {
-    response.status(400).send(err.message);
-  });
+  var time = parseInt(request.body.minutes * 1000);
+  var message = request.body.message;
+  switch (message) {
+    case "hospital":
+    delay(time).then(() => {
+      client.calls.create({
+        to: request.body.to,
+        from: callerId,
+        url: 'https://handler.twilio.com/twiml/EHadc8220e4f19192800dcc7e4d0e5bc93'
+      }).then(() => {
+        response.sendStatus(200);
+      }).catch((err) => {
+        response.status(400).send(err.message);
+      });
+    })
+        break;
+    case "jail":
+    delay(time).then(() => {
+      client.calls.create({
+        to: request.body.to,
+        from: callerId,
+        url: "https://handler.twilio.com/twiml/EH5a81b8d43829a4495ea42c036b5563c8"
+      }).then(() => {
+        response.sendStatus(200);
+      }).catch((err) => {
+        response.status(400).send(err.message);
+      });
+    })
+        break;
+    case "job":
+    delay(time).then(() => {
+      client.calls.create({
+        to: request.body.to,
+        from: callerId,
+        url: "https://handler.twilio.com/twiml/EHb32b923621f952f05d3351d337b28b27 "
+      }).then(() => {
+        response.sendStatus(200);
+      }).catch((err) => {
+        response.status(400).send(err.message);
+      });
+    })
+        break;
+    case "mom":
+    delay(time).then(() => {
+      client.calls.create({
+        to: request.body.to,
+        from: callerId,
+        url: "https://handler.twilio.com/twiml/EH99bea08bedbbe2d2438c022e190debc6"
+      }).then(() => {
+        response.sendStatus(200);
+      }).catch((err) => {
+        response.status(400).send(err.message);
+      });
+    })
+        break;
+}
+
+
+  /*
+  delay(time).then(() => {
+    client.calls.create({
+      to: request.body.to,
+      from: callerId,
+      url: request.body.message
+    }).then(() => {
+      response.sendStatus(200);
+    }).catch((err) => {
+      response.status(400).send(err.message);
+    });
+  })
+*/
 }
 
 exports.calls = calls;
